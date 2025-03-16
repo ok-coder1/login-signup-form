@@ -12,11 +12,11 @@ from pymongo import MongoClient
 import subprocess
 import hashlib
 
-CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/User/Desktop/tkdesigner-figma/login-signup-form/logout/build/assets/frame0")
-# Local Database - subprocess.Popen(["mongod", "--dbpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Data",  "--logpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Logs/mongo.log",  "--logappend"])
+ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame0")
+# Local Database - subprocess.Popen(["mongod", "--dbpath",  "../DB-Storage/Data",  "--logpath",  "../DB-Storage/Logs/mongo.log",  "--logappend"])
 mongo_client = MongoClient(CONNECTION_STRING)
 db = mongo_client.users
 logged_in_users_collection = db.logged_in_users
