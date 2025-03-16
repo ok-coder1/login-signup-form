@@ -13,11 +13,11 @@ from pymongo import MongoClient
 import subprocess
 import hashlib
 
-CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/assets/frame0")
-# Local Database - subprocess.Popen(["mongod", "--dbpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Data",  "--logpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Logs/mongo.log",  "--logappend"])
+ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame0")
+# Local Database - subprocess.Popen(["mongod", "--dbpath",  "../DB-Storage/Data",  "--logpath",  "../DB-Storage/Logs/mongo.log",  "--logappend"])
 mongo_client = MongoClient(CONNECTION_STRING)
 db = mongo_client.users
 registered_users_collection = db.registered_users
@@ -27,32 +27,36 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 def openLogin():
-    subprocess.Popen(["python3.11", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/Login.py"])
+    subprocess.Popen(["python", r"./Login.py"])
     exit()
 
 def success():
-    subprocess.Popen(["python3.11", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/signup-success/build/Signup-Success.py"])
+    subprocess.Popen(["python", r"../../signup-success/build/Signup-Success.py"])
     exit()
 
 def get_email_address_and_password_and_send_it():
-    email_address = email_address_entry.get()
-    password = password_entry.get()
-    find_user = registered_users_collection.find_one({"email_address": email_address, "password": {"encryption": {"sha224": hashlib.sha224(password.encode("utf-8")).hexdigest(), "sha256": hashlib.sha256(password.encode("utf-8")).hexdigest(), "sha384": hashlib.sha384(password.encode("utf-8")).hexdigest(), "sha512": hashlib.sha512(password.encode("utf-8")).hexdigest()}}})
-    sha224_encryption = hashlib.sha224(password.encode("utf-8")).hexdigest()
-    sha256_encryption = hashlib.sha256(password.encode("utf-8")).hexdigest()
-    sha384_encryption = hashlib.sha384(password.encode("utf-8")).hexdigest()
-    sha512_encryption = hashlib.sha512(password.encode("utf-8")).hexdigest()
-    login_details = {
-        "email_address": email_address,
-        "password": {
-            "encryption": {
-                "sha224": sha224_encryption,
-                "sha256": sha256_encryption,
-                "sha384": sha384_encryption,
-                "sha512": sha512_encryption
+    if (email_address and password != " " or "" or None) or (email_address or password != " " or "" or None):
+        if ("@" and "." in email_address):
+            find_user = registered_users_collection.find_one({"email_address": email_address, "password": {"encryption": {"sha224": hashlib.sha224(password.encode("utf-8")).hexdigest(), "sha256": hashlib.sha256(password.encode("utf-8")).hexdigest(), "sha384": hashlib.sha384(password.encode("utf-8")).hexdigest(), "sha512": hashlib.sha512(password.encode("utf-8")).hexdigest()}}})
+            sha224_encryption = hashlib.sha224(password.encode("utf-8")).hexdigest()
+            sha256_encryption = hashlib.sha256(password.encode("utf-8")).hexdigest()
+            sha384_encryption = hashlib.sha384(password.encode("utf-8")).hexdigest()
+            sha512_encryption = hashlib.sha512(password.encode("utf-8")).hexdigest()
+            login_details = {
+                "email_address": email_address,
+                "password": {
+                    "encryption": {
+                        "sha224": sha224_encryption,
+                        "sha256": sha256_encryption,
+                        "sha384": sha384_encryption,
+                        "sha512": sha512_encryption
+                    }
+                }
             }
-        }
-    }
+        else:
+            messagebox.showerror("Please fill in the details correctly", "Please fill in a valid email address.")
+    else:
+        messagebox.showerror("Please fill in the details", "Please fill in the details completely.")
     if (find_user == None):
         registered_users_collection.insert_one(login_details)
         success()
