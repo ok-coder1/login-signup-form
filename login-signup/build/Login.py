@@ -19,7 +19,7 @@ CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3v
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame1")
-# Local Database - subprocess.Popen(["mongod", "--dbpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Data",  "--logpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Logs/mongo.log",  "--logappend"])
+# Local Database - subprocess.Popen(["mongod", "--dbpath",  "../DB-Storage/Data",  "--logpath",  "../DB-Storage/Logs/mongo.log",  "--logappend"])
 mongo_client = MongoClient(CONNECTION_STRING)
 db = mongo_client.users
 logged_in_users_collection = db.logged_in_users
