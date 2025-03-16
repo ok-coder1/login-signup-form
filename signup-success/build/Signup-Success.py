@@ -12,14 +12,14 @@ import subprocess
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/User/Desktop/tkdesigner-figma/login-signup-form/signup-success/build/assets/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame0")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 def login():
-    subprocess.Popen(["python3", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/Login.py"])
+    subprocess.Popen(["python", r"../../login-signup/build/Login.py"])
     exit()
 
 

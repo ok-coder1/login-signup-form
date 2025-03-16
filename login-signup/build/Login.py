@@ -15,10 +15,10 @@ import hashlib
 import webbrowser
 import time
 
-CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://codershubcode:yiEq1ICyfn1E6UsO@cluster0.jnw3vvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/assets/frame1")
+ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame1")
 # Local Database - subprocess.Popen(["mongod", "--dbpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Data",  "--logpath",  "/Users/User/Desktop/tkdesigner-figma/login-signup-form/DB-Storage/Logs/mongo.log",  "--logappend"])
 mongo_client = MongoClient(CONNECTION_STRING)
 db = mongo_client.users
@@ -30,7 +30,7 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 def openSignup():
-    subprocess.Popen(["python3", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/Signup.py"])
+    subprocess.Popen(["python", r"./Signup.py"])
     exit()
 
 # Local Database
@@ -61,8 +61,8 @@ def find_email_address_and_password():
     if (find_user == None):
         messagebox.showerror("Error", "User not registered! or Wrong Password!")
     else:
-        webbrowser.open_new_tab("file:///Users/User/Documents/personal-site-mongodb-python-js/Personal-Site/index.html")
-        subprocess.run(["python3", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/open-url.py"])
+        ''' webbrowser.open_new_tab("file:///Users/User/Documents/personal-site-mongodb-python-js/Personal-Site/index.html")
+        subprocess.run(["python3", "/Users/User/Desktop/tkdesigner-figma/login-signup-form/login-signup/build/open-url.py"]) '''
         logged_in_users_collection.insert_one(login_details)
         # Local Database - subprocess.run(["killall", "mongod"])
         exit()
